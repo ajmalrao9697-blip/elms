@@ -1,0 +1,641 @@
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}MARS BPO - HR Management System{% endblock %}</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  
+  <!-- Custom Styling -->
+  <style>
+    :root {
+      --primary: #4e73df;
+      --primary-dark: #3a59c7;
+      --secondary: #6c757d;
+      --success: #1cc88a;
+      --info: #36b9cc;
+      --warning: #f6c23e;
+      --danger: #e74a3b;
+      --light: #f8f9fc;
+      --dark: #5a5c69;
+      --sidebar-width: 280px;
+      --header-height: 70px;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #2f53c2;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Particle Animation Container */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+    
+    /* Sidebar Styling */
+    .sidebar {
+      width: var(--sidebar-width);
+      min-height: 100vh;
+      background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .sidebar .navbar-brand {
+      padding: 20px 25px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 10px;
+    }
+    
+    .sidebar .nav-link {
+      color: rgba(255, 255, 255, 0.8);
+      padding: 12px 25px;
+      margin: 5px 15px;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .sidebar .nav-link:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(5px);
+    }
+    
+    .sidebar .nav-link.active {
+      color: white;
+      background: rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .sidebar .nav-link i {
+      width: 25px;
+      height: 25px;
+      text-align: center;
+      margin-right: 10px;
+    }
+    
+    /* Main Content */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Header */
+    .header {
+      height: var(--header-height);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    
+    .header .search-bar {
+      width: 300px;
+    }
+    
+    .user-menu {
+      display: flex;
+      align-items: center;
+    }
+    
+    .user-menu .dropdown-toggle {
+      display: flex;
+      align-items: center;
+    }
+    
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+    
+    /* Content Area */
+    .content {
+      padding: 20px;
+    }
+    
+    /* Stats Cards */
+    .stats-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+      margin-bottom: 20px;
+      transition: transform 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .stats-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .stats-card .icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+    
+    .stats-card .count {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    
+    .stats-card .label {
+      color: var(--secondary);
+      font-size: 0.9rem;
+    }
+    
+    /* Cards */
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+    }
+    
+    /* Notification Badge */
+    .notification-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: var(--danger);
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Buttons */
+    .btn {
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border: none;
+    }
+    
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(78, 115, 223, 0.3);
+    }
+    
+    .btn-outline-primary {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    
+    .btn-outline-primary:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+      .sidebar {
+        transform: translateX(-100%);
+        width: 0;
+      }
+      
+      .sidebar.show {
+        transform: translateX(0);
+        width: var(--sidebar-width);
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      .toggle-sidebar {
+        display: block !important;
+      }
+    }
+    
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease-out;
+    }
+  </style>
+
+  <!-- HTMX -->
+  <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+</head>
+<body class="d-flex">
+
+  <!-- Particle Animation Background -->
+  <div id="particles-js"></div>
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <a href="{% url 'hr:dashboard' %}" class="navbar-brand">
+      <i class="fas fa-rocket me-2"></i> MARS BPO
+    </a>
+    <ul class="nav nav-pills flex-column">
+      <li class="nav-item">
+        <a href="{% url 'hr:dashboard' %}" 
+           class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+          <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'hr:employee_list' %}" 
+           class="nav-link {% if request.resolver_match.url_name == 'employee_list' %}active{% endif %}">
+          <i class="fas fa-users"></i> Employees
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'hr:attendance_list' %}" 
+           class="nav-link {% if request.resolver_match.url_name == 'attendance_list' %}active{% endif %}">
+          <i class="fas fa-calendar-check"></i> Attendance
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'hr:salary_list' %}" 
+           class="nav-link {% if request.resolver_match.url_name == 'salary_list' %}active{% endif %}">
+          <i class="fas fa-money-bill-wave"></i> Salary
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link"
+           hx-get="{% url 'hr:generate_letter' %}" 
+           hx-target="#modal-body" hx-swap="innerHTML">
+          <i class="fas fa-envelope"></i> Letters
+        </a>
+      </li>
+      <li class="nav-item mt-4">
+        <a href="#" class="nav-link">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          <i class="fas fa-question-circle"></i> Help & Support
+        </a>
+      </li>
+    </ul>
+    
+    <div class="mt-auto p-3 text-center">
+      <small>HR Management System </small>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Header -->
+    <header class="header">
+      <div class="d-flex align-items-center">
+        <button class="btn btn-sm btn-outline-secondary me-3 toggle-sidebar" style="display: none;">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="search-bar">
+          <div class="input-group">
+            <input type="text" class="form-control form-control-sm" placeholder="Search employees, reports...">
+            <button class="btn btn-primary" type="button">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="user-menu">
+        <div class="dropdown">
+          <a href="#" class="dropdown-toggle text-decoration-none text-dark" role="button" 
+             id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="user-avatar">
+              <span>A</span>
+            </div>
+            <span class="d-none d-md-inline">Admin User</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+          </ul>
+        </div>
+        
+        <div class="ms-3 position-relative">
+          <button class="btn btn-light btn-sm position-relative">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge">3</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Area -->
+    <div class="content">
+      {% block content %}
+      <!-- Default dashboard content if no other content is provided -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">Dashboard Overview</h4>
+        <div>
+          <button class="btn btn-sm btn-outline-secondary">
+            <i class="fas fa-download"></i> Export Report
+          </button>
+          <button class="btn btn-sm btn-primary ms-2">
+            <i class="fas fa-plus"></i> Add New
+          </button>
+        </div>
+      </div>
+      
+      <!-- Stats Cards -->
+      <div class="row mb-4">
+        <div class="col-xl-3 col-md-6">
+          <div class="stats-card fade-in">
+            <div class="icon bg-primary text-white">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="count text-primary">142</div>
+            <div class="label">Total Employees</div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+          <div class="stats-card fade-in">
+            <div class="icon bg-success text-white">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="count text-success">94%</div>
+            <div class="label">Attendance Rate</div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+          <div class="stats-card fade-in">
+            <div class="icon bg-warning text-white">
+              <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <div class="count text-warning">$42,560</div>
+            <div class="label">Monthly Payroll</div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+          <div class="stats-card fade-in">
+            <div class="icon bg-info text-white">
+              <i class="fas fa-clipboard-list"></i>
+            </div>
+            <div class="count text-info">12</div>
+            <div class="label">Pending Requests</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Recent Activity -->
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-header bg-white">
+              <h5 class="mb-0">Recent Activity</h5>
+            </div>
+            <div class="card-body">
+              <div class="list-group list-group-flush">
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <i class="fas fa-user-plus text-success me-2"></i>
+                    <span>New employee added: Ali</span>
+                  </div>
+                  <small class="text-muted">2 hours ago</small>
+                </div>
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <i class="fas fa-money-check text-primary me-2"></i>
+                    <span>Salary processed for June 2023</span>
+                  </div>
+                  <small class="text-muted">1 day ago</small>
+                </div>
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <i class="fas fa-calendar-alt text-warning me-2"></i>
+                    <span>Attendance marked for 15 employees</span>
+                  </div>
+                  <small class="text-muted">2 days ago</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-header bg-white">
+              <h5 class="mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+              <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary text-start" 
+                        hx-get="{% url 'hr:employee_create' %}" 
+                        hx-target="#modal-body" hx-swap="innerHTML">
+                  <i class="fas fa-user-plus me-2"></i> Add Employee
+                </button>
+                <button class="btn btn-outline-success text-start"
+                        hx-get="{% url 'hr:attendance_create' %}" 
+                        hx-target="#modal-body" hx-swap="innerHTML">
+                  <i class="fas fa-calendar-plus me-2"></i> Mark Attendance
+                </button>
+                <button class="btn btn-outline-warning text-start"
+                        hx-get="{% url 'hr:salary_create' %}" 
+                        hx-target="#modal-body" hx-swap="innerHTML">
+                  <i class="fas fa-money-check me-2"></i> Process Salary
+                </button>
+                <button class="btn btn-outline-info text-start"
+                        hx-get="{% url 'hr:generate_letter' %}" 
+                        hx-target="#modal-body" hx-swap="innerHTML">
+                  <i class="fas fa-envelope me-2"></i> Generate Letter
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endblock %}
+    </div>
+  </div>
+
+  <!-- Global Modal -->
+  <div class="modal fade" id="modal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Initialize particles.js
+    document.addEventListener('DOMContentLoaded', function() {
+      particlesJS('particles-js', {
+        particles: {
+          number: {
+            value: 80,
+            density: {
+              enable: true,
+              value_area: 800
+            }
+          },
+          color: {
+            value: "#ffffff"
+          },
+          shape: {
+            type: "circle",
+            stroke: {
+              width: 0,
+              color: "#000000"
+            }
+          },
+          opacity: {
+            value: 0.5,
+            random: true,
+            anim: {
+              enable: true,
+              speed: 1,
+              opacity_min: 0.1,
+              sync: false
+            }
+          },
+          size: {
+            value: 3,
+            random: true,
+            anim: {
+              enable: true,
+              speed: 2,
+              size_min: 0.1,
+              sync: false
+            }
+          },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: "#ffffff",
+            opacity: 0.4,
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 1,
+            direction: "none",
+            random: true,
+            straight: false,
+            out_mode: "out",
+            bounce: false,
+            attract: {
+              enable: false,
+              rotateX: 600,
+              rotateY: 1200
+            }
+          }
+        },
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: {
+              enable: true,
+              mode: "grab"
+            },
+            onclick: {
+              enable: true,
+              mode: "push"
+            },
+            resize: true
+          },
+          modes: {
+            grab: {
+              distance: 140,
+              line_linked: {
+                opacity: 1
+              }
+            },
+            push: {
+              particles_nb: 4
+            }
+          }
+        },
+        retina_detect: true
+      });
+
+      // Auto-open modal when HTMX loads content into modal-body
+      document.body.addEventListener('htmx:afterSwap', (evt) => {
+        if (evt.detail.target.id === 'modal-body') {
+          var modal = new bootstrap.Modal(document.getElementById('modal'));
+          modal.show();
+        }
+      });
+      
+      // Toggle sidebar on mobile
+      document.querySelector('.toggle-sidebar').addEventListener('click', function() {
+        document.querySelector('.sidebar').classList.toggle('show');
+      });
+      
+      // Close sidebar when clicking outside on mobile
+      document.addEventListener('click', function(event) {
+        const sidebar = document.querySelector('.sidebar');
+        const toggleBtn = document.querySelector('.toggle-sidebar');
+        
+        if (window.innerWidth < 992 && 
+            !sidebar.contains(event.target) && 
+            !toggleBtn.contains(event.target) &&
+            sidebar.classList.contains('show')) {
+          sidebar.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

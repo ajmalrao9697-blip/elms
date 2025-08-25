@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Letter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --offer-color: #ff6b6b;
+            --experience-color: #4ecdc4;
+            --resignation-color: #45b7d1;
+            --warning-color: #f9c74f;
+            --termination-color: #f9844a;
+        }
+        
+        .modal-content {
+            border-radius: 12px;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .modal-header {
+            background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-bottom: none;
+            padding: 15px 20px;
+            position: relative;
+        }
+        
+        .modal-title {
+            font-weight: 600;
+            font-size: 1.4rem;
+        }
+        
+        .btn-close {
+            filter: invert(1);
+            opacity: 0.8;
+        }
+        
+        .btn-close:hover {
+            opacity: 1;
+        }
+        
+        .modal-body {
+            padding: 25px;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #444;
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-label i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 10px 15px;
+            border: 2px solid #e6e6e6;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.15);
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-group-text {
+            background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn-secondary {
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+        }
+        
+        .letter-type-indicator {
+            height: 5px;
+            background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        
+        /* Animation for form elements */
+        .mb-2 {
+            transition: transform 0.3s;
+        }
+        
+        .mb-2:hover {
+            transform: translateX(5px);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 576px) {
+            .modal-body {
+                padding: 20px 15px;
+            }
+            
+            .text-end {
+                text-align: center !important;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title"><i class="fas fa-file-alt me-2"></i>Generate Letter</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+            <div class="letter-type-indicator"></div>
+            <form hx-post="{% url 'hr:generate_letter' %}" hx-target="#modal-body" hx-swap="innerHTML">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label"><i class="fas fa-user"></i>Employee Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input class="form-control" name="name" placeholder="Full Name">
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label"><i class="fas fa-id-card"></i>CNIC</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                        <input class="form-control" name="cnic" placeholder="XXXXX-XXXXXXX-X">
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label"><i class="fas fa-briefcase"></i>Designation</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
+                        <input class="form-control" name="designation" placeholder="Job Title">
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label"><i class="fas fa-calendar-alt"></i>Joining Date</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                        <input class="form-control" name="joining_date" placeholder="YYYY-MM-DD">
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="form-label"><i class="fas fa-envelope"></i>Letter Type</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <select class="form-select" name="letter_type" id="letterType">
+                            <option value="offer_letter">Offer Letter</option>
+                            <option value="experience_letter">Experience Letter</option>
+                            <option value="resignation_letter">Resignation Letter</option>
+                            <option value="warning_letter">Warning Letter</option>
+                            <option value="termination_letter">Termination Letter</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="text-end">
+                    <button class="btn btn-secondary me-2" type="button" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-1"></i>Close
+                    </button>
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-eye me-1"></i>Preview
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const letterTypeSelect = document.getElementById('letterType');
+        const modalHeader = document.querySelector('.modal-header');
+        const indicator = document.querySelector('.letter-type-indicator');
+        const submitBtn = document.querySelector('.btn-primary');
+        
+        // Color mapping for different letter types
+        const colorMap = {
+            'offer_letter': ['#ff6b6b', '#ff8e8e'],
+            'experience_letter': ['#4ecdc4', '#6de0d7'],
+            'resignation_letter': ['#45b7d1', '#64c9e1'],
+            'warning_letter': ['#f9c74f', '#fad570'],
+            'termination_letter': ['#f9844a', '#fa9c6c']
+        };
+        
+        // Update colors based on selected letter type
+        function updateColors(type) {
+            const colors = colorMap[type] || ['#4361ee', '#3a0ca3'];
+            
+            // Update CSS variables
+            document.documentElement.style.setProperty('--primary-color', colors[0]);
+            document.documentElement.style.setProperty('--secondary-color', colors[1]);
+            
+            // Update header and indicator
+            modalHeader.style.background = `linear-gradient(120deg, ${colors[0]}, ${colors[1]})`;
+            indicator.style.background = `linear-gradient(120deg, ${colors[0]}, ${colors[1]})`;
+            
+            // Update input group text
+            document.querySelectorAll('.input-group-text').forEach(el => {
+                el.style.background = `linear-gradient(120deg, ${colors[0]}, ${colors[1]})`;
+            });
+            
+            // Update button
+            submitBtn.style.background = `linear-gradient(120deg, ${colors[0]}, ${colors[1]})`;
+        }
+        
+        // Initial color setup
+        updateColors(letterTypeSelect.value);
+        
+        // Update colors when selection changes
+        letterTypeSelect.addEventListener('change', function() {
+            updateColors(this.value);
+        });
+        
+        // Add animation to form elements
+        const formGroups = document.querySelectorAll('.mb-3, .mb-4');
+        formGroups.forEach((group, index) => {
+            group.style.transitionDelay = `${index * 0.05}s`;
+        });
+    });
+</script>
+
+</body>
+</html>

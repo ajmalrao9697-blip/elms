@@ -1,0 +1,16 @@
+<tr id="employee-{{ e.pk }}">
+  <td>{{ e.employee_id }}</td>
+  <td>{{ e.name }}</td>
+  <td>{{ e.cnic }}</td>
+  <td>{{ e.designation }}</td>
+  <td>{{ e.contact_number }}</td>
+  <td>
+    <button class="btn btn-sm btn-outline-secondary"
+      hx-get="{% url 'hr:employee_edit' e.pk %}"
+      hx-target="#modal-body" hx-swap="innerHTML">Edit</button>
+    <button class="btn btn-sm btn-outline-danger"
+      hx-delete="{% url 'hr:employee_delete' e.pk %}"
+      hx-confirm="Are you sure?"
+      hx-target="#employee-{{ e.pk }}" hx-swap="outerHTML">Delete</button>
+  </td>
+</tr>

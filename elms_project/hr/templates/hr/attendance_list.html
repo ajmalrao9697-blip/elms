@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4e73df;
+            --secondary: #6c757d;
+            --success: #1cc88a;
+            --info: #36b9cc;
+            --warning: #f6c23e;
+            --danger: #e74a3b;
+            --light: #f8f9fc;
+            --dark: #5a5c69;
+        }
+        
+        body {
+            background-color: #85e285;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            margin-bottom: 20px;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #2a3e9d 100%);
+            color: white;
+            border-radius: 10px 10px 0 0;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #2a3e9d 100%);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #eaebee 0%, var(--primary) 100%);
+            transform: translateY(-1px);
+        }
+        
+        .table thead th {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(78, 115, 223, 0.05);
+        }
+        
+        .stats-card {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .stats-card i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .stats-card .count {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .stats-card .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .card-1 { background: linear-gradient(135deg, var(--primary) 0%, #070580 100%); }
+        .card-2 { background: linear-gradient(135deg, var(--success) 0%, #026836 100%); }
+        .card-3 { background: linear-gradient(135deg, var(--info) 0%, #1c7ca9 100%); }
+        .card-4 { background: linear-gradient(135deg, var(--warning) 0%, #dda908 100%); }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+        }
+        
+        .attendance-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .employee-input-container {
+            position: relative;
+        }
+        
+        .suggestions-box {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ced4da;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .suggestion-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        
+        .suggestion-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+        
+        .toast {
+            background-color: var(--success);
+            color: white;
+            border-radius: 5px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .toast.error {
+            background-color: var(--danger);
+        }
+    </style>
+</head>
+<body>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="h3 mb-0 text-gray-800"><i class="fas fa-calendar-check text-primary"></i> Attendance Management</h2>
+                    <div>
+                        <button class="btn btn-sm btn-outline-secondary" id="exportBtn">
+                            <i class="fas fa-download"></i> Export CSV
+                        </button>
+                        <button class="btn btn-primary" id="addAttendanceBtn">
+                            <i class="fas fa-plus"></i> Add Attendance
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-xl-3 col-md-6">
+                <div class="stats-card card-1 fade-in">
+                    <i class="fas fa-users"></i>
+                    <div class="count" id="totalEmployees">42</div>
+                    <div class="label">TOTAL EMPLOYEES</div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="stats-card card-2 fade-in">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div class="count" id="monthRecords">378</div>
+                    <div class="label">THIS MONTH'S RECORDS</div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="stats-card card-3 fade-in">
+                    <i class="fas fa-check-circle"></i>
+                    <div class="count" id="presentDays">312</div>
+                    <div class="label">TOTAL PRESENT DAYS</div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="stats-card card-4 fade-in">
+                    <i class="fas fa-umbrella-beach"></i>
+                    <div class="count" id="totalLeaves">66</div>
+                    <div class="label">TOTAL LEAVES</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Attendance Input Form -->
+        <div class="card fade-in">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold"><i class="fas fa-plus-circle"></i> Add New Attendance Record</h6>
+            </div>
+            <div class="card-body">
+                <form id="attendanceForm" class="attendance-form">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="employee" class="form-label">Employee</label>
+                            <div class="employee-input-container">
+                                <input type="text" class="form-control" id="employee" name="employee" placeholder="Enter employee name" required>
+                                <div class="suggestions-box" id="suggestions"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="month" class="form-label">Month</label>
+                            <input type="month" class="form-control" id="month" name="month" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="total_days" class="form-label">Total Days in Month</label>
+                            <input type="number" class="form-control" id="total_days" name="total_days" min="1" max="31" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="leaves" class="form-label">Leaves Taken</label>
+                            <input type="number" class="form-control" id="leaves" name="leaves" min="0" max="31" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="present_days" class="form-label">Present Days</label>
+                            <input type="number" class="form-control" id="present_days" name="present_days" min="0" max="31" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes (Optional)</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="2"></textarea>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="reset" class="btn btn-secondary me-md-2">Reset</button>
+                        <button type="submit" class="btn btn-primary">Save Attendance Record</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Attendance Records Table -->
+        <div class="card fade-in">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold"><i class="fas fa-history"></i> Attendance Records</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Employee Name</th>
+                                <th>Month</th>
+                                <th>Total Days</th>
+                                <th>Leaves</th>
+                                <th>Present Days</th>
+                                <th>Notes</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceTableBody">
+                            <!-- Table rows will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample employee data (in a real app, this would come from a backend API)
+        const employees = [
+            "Sarah Johnson",
+            "Michael Roberts", 
+            "Emily Chen",
+            "David Wilson",
+            "Jessica Brown",
+            "Christopher Taylor",
+            "Amanda Smith",
+            "James Anderson"
+        ];
+        
+        // Store for attendance records (in a real app, this would be in a database)
+        let attendanceRecords = [];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current month as default
+            const now = new Date();
+            const currentMonth = now.toISOString().slice(0, 7);
+            document.getElementById('month').value = currentMonth;
+            
+            // Load any existing records from localStorage
+            loadAttendanceRecords();
+            updateStats();
+            
+            // Employee input suggestions
+            const employeeInput = document.getElementById('employee');
+            const suggestionsBox = document.getElementById('suggestions');
+            
+            employeeInput.addEventListener('input', function() {
+                const value = this.value.toLowerCase();
+                suggestionsBox.innerHTML = '';
+                
+                if (value.length > 1) {
+                    const filtered = employees.filter(emp => 
+                        emp.toLowerCase().includes(value)
+                    );
+                    
+                    if (filtered.length > 0) {
+                        suggestionsBox.style.display = 'block';
+                        
+                        filtered.forEach(emp => {
+                            const div = document.createElement('div');
+                            div.className = 'suggestion-item';
+                            div.textContent = emp;
+                            div.addEventListener('click', function() {
+                                employeeInput.value = emp;
+                                suggestionsBox.style.display = 'none';
+                            });
+                            suggestionsBox.appendChild(div);
+                        });
+                    } else {
+                        suggestionsBox.style.display = 'none';
+                    }
+                } else {
+                    suggestionsBox.style.display = 'none';
+                }
+            });
+            
+            // Hide suggestions when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!employeeInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+                    suggestionsBox.style.display = 'none';
+                }
+            });
+            
+            // Update present days when leaves or total days change
+            const totalDaysInput = document.getElementById('total_days');
+            const leavesInput = document.getElementById('leaves');
+            const presentDaysInput = document.getElementById('present_days');
+            
+            function updatePresentDays() {
+                const totalDays = parseInt(totalDaysInput.value) || 0;
+                const leaves = parseInt(leavesInput.value) || 0;
+                
+                if (totalDays > 0) {
+                    presentDaysInput.value = totalDays - leaves;
+                }
+            }
+            
+            totalDaysInput.addEventListener('change', updatePresentDays);
+            leavesInput.addEventListener('change', updatePresentDays);
+            
+            // Form submission
+            const attendanceForm = document.getElementById('attendanceForm');
+            attendanceForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const record = {
+                    id: Date.now(), // Unique ID for the record
+                    employee: formData.get('employee'),
+                    month: formData.get('month'),
+                    total_days: parseInt(formData.get('total_days')),
+                    leaves: parseInt(formData.get('leaves')),
+                    present_days: parseInt(formData.get('present_days')),
+                    notes: formData.get('notes'),
+                    date: new Date().toISOString()
+                };
+                
+                // Save the record
+                saveAttendanceRecord(record);
+                
+                // Reset form
+                this.reset();
+                document.getElementById('month').value = currentMonth;
+                
+                // Show success message
+                showToast('Attendance record saved successfully!');
+            });
+            
+            // Export button
+            document.getElementById('exportBtn').addEventListener('click', function() {
+                exportToCSV();
+            });
+        });
+        
+        function saveAttendanceRecord(record) {
+            // Add to our records array
+            attendanceRecords.push(record);
+            
+            // In a real app, you would send this to your backend
+            // For this demo, we'll use localStorage
+            localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));
+            
+            // Update the UI
+            loadAttendanceRecords();
+            updateStats();
+        }
+        
+        function loadAttendanceRecords() {
+            // In a real app, you would fetch this from your backend
+            const stored = localStorage.getItem('attendanceRecords');
+            if (stored) {
+                attendanceRecords = JSON.parse(stored);
+            }
+            
+            // Update the table
+            const tableBody = document.getElementById('attendanceTableBody');
+            tableBody.innerHTML = '';
+            
+            if (attendanceRecords.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="7" class="text-center py-4">No attendance records found.</td></tr>';
+                return;
+            }
+            
+            attendanceRecords.forEach(record => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${record.employee}</td>
+                    <td>${record.month}</td>
+                    <td>${record.total_days}</td>
+                    <td>${record.leaves}</td>
+                    <td>${record.present_days}</td>
+                    <td>${record.notes || '-'}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary edit-btn" data-id="${record.id}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${record.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+            
+            // Add event listeners to delete buttons
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    deleteRecord(id);
+                });
+            });
+            
+            // Add event listeners to edit buttons
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    editRecord(id);
+                });
+            });
+        }
+        
+        function deleteRecord(id) {
+            if (confirm('Are you sure you want to delete this record?')) {
+                attendanceRecords = attendanceRecords.filter(record => record.id != id);
+                localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));
+                loadAttendanceRecords();
+                updateStats();
+                showToast('Record deleted successfully!');
+            }
+        }
+        
+        function editRecord(id) {
+            const record = attendanceRecords.find(r => r.id == id);
+            if (record) {
+                // Fill the form with the record data
+                document.getElementById('employee').value = record.employee;
+                document.getElementById('month').value = record.month;
+                document.getElementById('total_days').value = record.total_days;
+                document.getElementById('leaves').value = record.leaves;
+                document.getElementById('present_days').value = record.present_days;
+                document.getElementById('notes').value = record.notes || '';
+                
+                // Remove the record (will be re-added when form is submitted)
+                attendanceRecords = attendanceRecords.filter(r => r.id != id);
+                localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));
+                loadAttendanceRecords();
+                updateStats();
+                
+                showToast('Record loaded for editing. Update and submit to save.');
+            }
+        }
+        
+        function updateStats() {
+            // Update the statistics cards
+            document.getElementById('totalEmployees').textContent = employees.length;
+            document.getElementById('monthRecords').textContent = attendanceRecords.length;
+            
+            const presentDays = attendanceRecords.reduce((sum, record) => sum + record.present_days, 0);
+            const totalLeaves = attendanceRecords.reduce((sum, record) => sum + record.leaves, 0);
+            
+            document.getElementById('presentDays').textContent = presentDays;
+            document.getElementById('totalLeaves').textContent = totalLeaves;
+        }
+        
+        function showToast(message, isError = false) {
+            const toast = document.createElement('div');
+            toast.className = isError ? 'toast error' : 'toast';
+            toast.innerHTML = `
+                <span>${message}</span>
+                <button class="btn btn-sm btn-light" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            document.getElementById('toastContainer').appendChild(toast);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.remove();
+                }
+            }, 3000);
+        }
+        
+        function exportToCSV() {
+            if (attendanceRecords.length === 0) {
+                showToast('No records to export!', true);
+                return;
+            }
+            
+            // Create CSV content
+            let csv = 'Employee,Month,Total Days,Leaves,Present Days,Notes\n';
+            
+            attendanceRecords.forEach(record => {
+                csv += `"${record.employee}",${record.month},${record.total_days},${record.leaves},${record.present_days},"${record.notes || ''}"\n`;
+            });
+            
+            // Create download link
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'attendance_records.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('CSV exported successfully!');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARS BPO - Warning Letter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --mars-primary: #ff3e00;
+            --mars-secondary: #ff7f50;
+            --mars-dark: #1a1a2e;
+            --mars-light: #f8f9fa;
+            --mars-accent: #00a8cc;
+            --mars-warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .letter-header {
+            background: linear-gradient(135deg, var(--mars-warning), #e67e22);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .header-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .mars-stripes {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--mars-warning),
+                var(--mars-warning) 10px,
+                #e67e22 10px,
+                #e67e22 20px
+            );
+        }
+        
+        .letter-body {
+            padding: 40px;
+        }
+        
+        .letter-content {
+            background: var(--mars-light);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .letter-content:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--mars-warning), #e67e22);
+        }
+        
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .warning-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .detail-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--mars-warning);
+        }
+        
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--mars-dark);
+        }
+        
+        .detail-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(243, 156, 18, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--mars-warning);
+            font-size: 1.2rem;
+        }
+        
+        .detail-content {
+            color: #555;
+        }
+        
+        .detail-value {
+            font-weight: 700;
+            color: var(--mars-dark);
+            margin-top: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .signature-area {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .signature-box {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .signature-line {
+            height: 1px;
+            background: #ccc;
+            margin: 40px 0 10px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--mars-warning), #e67e22);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--mars-warning);
+            color: var(--mars-warning);
+        }
+        
+        .btn-outline:hover {
+            background: var(--mars-warning);
+            color: white;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .content-header {
+                flex-direction: column;
+            }
+            
+            .signature-area {
+                flex-direction: column;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="letter-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-planet-ringed"></i>
+                </div>
+                <div>
+                    <h1>MARS BPO</h1>
+                    <p class="header-subtitle">Warning Letter</p>
+                </div>
+            </div>
+            <div class="mars-stripes"></div>
+        </div>
+        
+        <div class="letter-body">
+            <div class="letter-content">
+                <div class="content-header">
+                    <div>
+                        <p><strong>Date:</strong> August 23, 2025</p>
+                        <p><strong>Letter ID:</strong> MBPO-WARN-2025-089</p>
+                        <p><strong>Warning Level:</strong> First Warning</p>
+                    </div>
+                    <div>
+                        <p><strong>To:</strong> Danish khan</p>
+                        <p><strong>Position:</strong> Customer Support Specialist</p>
+                        <p><strong>Employee ID:</strong> MBPO-2289</p>
+                    </div>
+                </div>
+                
+                <p>Dear Sarah,</p>
+                
+                <p>This letter serves as a formal written warning regarding your recent performance issues. We have observed the following concerns that need immediate attention and improvement:</p>
+                
+                <div class="warning-details">
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <div class="detail-icon">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <h3>Issue Details</h3>
+                        </div>
+                        <div class="detail-content">
+                            <p>Type: <span class="detail-value">Performance Issue</span></p>
+                            <p>Incident Date: <span class="detail-value">August 20, 2025</span></p>
+                            <p>Reported By: <span class="detail-value">Team Manager</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <div class="detail-icon">
+                                <i class="fas fa-clipboard-list"></i>
+                            </div>
+                            <h3>Specific Concerns</h3>
+                        </div>
+                        <div class="detail-content">
+                            <p>1. Repeated late arrivals</p>
+                            <p>2. Missed productivity targets</p>
+                            <p>3. Incomplete documentation</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <div class="detail-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <h3>Expected Improvement</h3>
+                        </div>
+                        <div class="detail-content">
+                            <p>Deadline: <span class="detail-value">September 30, 2025</span></p>
+                            <p>Review Date: <span class="detail-value">October 5, 2025</span></p>
+                            <p>Metrics: <span class="detail-value">Punctuality & Quality</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <div class="detail-icon">
+                                <i class="fas fa-hands-helping"></i>
+                            </div>
+                            <h3>Support Provided</h3>
+                        </div>
+                        <div class="detail-content">
+                            <p>Training: <span class="detail-value">Time Management</span></p>
+                            <p>Mentor: <span class="detail-value">Nauman sb (Senior)</span></p>
+                            <p>Resources: <span class="detail-value">Additional guidelines</span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>We expect to see immediate and sustained improvement in the areas mentioned above. Your performance will be reviewed on <strong>October 5, 2025</strong> to assess progress.</p>
+                
+                <p>Failure to demonstrate significant improvement may result in further disciplinary action, up to and including termination of employment.</p>
+                
+                <p>Please schedule a meeting with your manager to discuss a plan for improvement. We are committed to supporting you in this process.</p>
+                
+                <p>Sincerely,</p>
+                
+                <div class="signature-area">
+                    <div class="signature-box">
+                        <p><strong>Umair Kayani</strong></p>
+                        <p>HR Director</p>
+                        <p>MARS BPO</p>
+                        <div class="signature-line"></div>
+                        <p>Signature: _________________________</p>
+                    </div>
+                    
+                    <div class="signature-box">
+                        <p><strong>Acknowledgment</strong></p>
+                        <p>I have received and understand this warning letter.</p>
+                        <div class="signature-line"></div>
+                        <p>Signature: _________________________</p>
+                        <p>Name: _________________________</p>
+                        <p>Date: _________________________</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary">
+                    <i class="fas fa-download"></i> Download Warning Letter
+                </button>
+                <button class="btn btn-outline">
+                    <i class="fas fa-print"></i> Print Warning Letter
+                </button>
+                <button class="btn btn-outline">
+                    <i class="fas fa-envelope"></i> Email Warning Letter
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add button functionality
+            document.querySelectorAll('.btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.textContent.includes('Download')) {
+                        alert('Warning letter download started!');
+                    } else if (this.textContent.includes('Print')) {
+                        window.print();
+                    } else if (this.textContent.includes('Email')) {
+                        alert('Warning letter sent to your email!');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>brown Background with Animated Stars</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'your_app/css/stars.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="stars" id="stars"></div>
+        
+        <div class="content">
+            <h1>Starry Night Sky</h1>
+            <p>This is a beautiful brown background with animated stars. You can use this as a static file in your Django project.</p>
+            <a href="#" class="btn">Get Started</a>
+        </div>
+    </div>
+
+    <script src="{% static 'your_app/js/stars.js' %}"></script>
+</body>
+</html>

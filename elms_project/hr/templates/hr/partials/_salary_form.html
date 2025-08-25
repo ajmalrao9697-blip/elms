@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <h5 class="modal-title">{% if s %}Edit{% else %}Add{% endif %} Salary</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+  <form hx-post="{% if s %}{% url 'hr:salary_edit' s.pk %}{% else %}{% url 'hr:salary_create' %}{% endif %}" hx-target="#salary-table" hx-swap="{% if s %}outerHTML{% else %}beforeend{% endif %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="text-end">
+      <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+      <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+  </form>
+</div>

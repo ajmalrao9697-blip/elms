@@ -1,0 +1,718 @@
+{% extends "hr/base.html" %}
+
+{% block title %}HR Dashboard - Mars BPO{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<style>
+    :root { 
+        --primary: #1565C0; 
+        --primary-light: #1976D2; 
+        --secondary: #1E88E5;
+        --success: #28A745; 
+        --info: #17A2B8; 
+        --warning: #FFC107; 
+        --danger: #DC3545;
+        --light: #F8F9FA; 
+        --dark: #343A40; 
+    }
+    
+    body { 
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        color: #343A40;
+        overflow-x: hidden; 
+        min-height: 100vh; 
+        position: relative; 
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* Particle Animation Container */
+    #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+    
+    .dashboard-container {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .dashboard-header {
+        background: rgba(255, 255, 255, 0.15);
+        color: rgb(241, 241, 241);
+        padding: 20px 0;
+        margin-bottom: 25px;
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(10px);
+    }
+    
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 25px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        background: rgba(236, 235, 235, 0.92);
+        backdrop-filter: blur(10px);
+        overflow: hidden;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.2);
+    }
+    
+    .stats-card {
+        text-align: center;
+        padding: 25px;
+        border-radius: 15px;
+        color: white;
+        margin-bottom: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+    }
+    
+    .stats-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+        transform: rotate(45deg);
+        animation: border-animation 6s linear infinite;
+        z-index: 1;
+    }
+    
+    .stats-card > * {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .stats-card i {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+    }
+    
+    .stats-card .count {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    
+    .stats-card .label {
+        font-size: 1rem;
+        opacity: 0.9;
+        margin-bottom: 15px;
+    }
+    
+    .stats-card .btn {
+        margin-top: 10px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        border-radius: 20px;
+        padding: 8px 15px;
+        transition: all 0.3s;
+        font-size: 0.9rem;
+    }
+    
+    .stats-card .btn:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+    }
+    
+    .card-1 {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    }
+    
+    .card-2 {
+        background: linear-gradient(135deg, var(--success) 0%, #34CE87 100%);
+    }
+    
+    .card-3 {
+        background: linear-gradient(135deg, var(--info) 0%, #39C0D3 100%);
+    }
+    
+    .card-4 {
+        background: linear-gradient(135deg, var(--warning) 0%, #FFD54F 100%);
+    }
+    
+    .quick-actions {
+        background-color: rgba(255, 255, 255, 0.92);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+        backdrop-filter: blur(10px);
+    }
+    
+    .quick-action-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        border-radius: 12px;
+        background-color: var(--light);
+        text-align: center;
+        transition: all 0.3s;
+        height: 100%;
+        color: var(--dark);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .quick-action-btn i {
+        font-size: 2rem;
+        margin-bottom: 12px;
+        color: var(--primary);
+        transition: all 0.3s;
+    }
+    
+    .quick-action-btn span {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+    
+    .quick-action-btn:hover {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        color: white;
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(21, 101, 192, 0.3);
+    }
+    
+    .quick-action-btn:hover i {
+        color: white;
+        transform: scale(1.1);
+    }
+    
+    .recent-activity {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .recent-activity li {
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        transition: background 0.3s;
+        font-size: 0.95rem;
+    }
+    
+    .recent-activity li:hover {
+        background-color: rgba(21, 101, 192, 0.05);
+        border-radius: 8px;
+    }
+    
+    .recent-activity li:last-child {
+        border-bottom: none;
+    }
+    
+    .recent-activity .badge {
+        margin-right: 12px;
+        font-size: 0.7rem;
+        padding: 6px 10px;
+        border-radius: 12px;
+    }
+    
+    .chart-container {
+        position: relative;
+        height: 250px;
+    }
+    
+    .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--danger);
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+    }
+    
+    .btn-outline-light {
+        border-color: rgba(255, 255, 255, 0.5);
+        color: white;
+        transition: all 0.3s;
+    }
+    
+    .btn-outline-light:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-color: white;
+        transform: translateY(-2px);
+    }
+    
+    @keyframes border-animation {
+        0% {
+            transform: rotate(45deg) translateX(-50%);
+        }
+        100% {
+            transform: rotate(45deg) translateX(50%);
+        }
+    }
+    
+    @keyframes fadeIn {
+        from { 
+            opacity: 0; 
+            transform: translateY(20px); 
+        }
+        to { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+    }
+    
+    .fade-in {
+        animation: fadeIn 0.8s ease-out;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .stats-card {
+            padding: 20px;
+        }
+        
+        .stats-card .count {
+            font-size: 1.8rem;
+        }
+        
+        .stats-card i {
+            font-size: 2rem;
+        }
+        
+        .dashboard-header h1 {
+            font-size: 1.8rem;
+        }
+        
+        .quick-action-btn {
+            padding: 15px 10px;
+        }
+        
+        .quick-action-btn i {
+            font-size: 1.6rem;
+        }
+        
+        .chart-container {
+            height: 200px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Particle Animation Background -->
+<div id="particles-js"></div>
+
+<div class="dashboard-container">
+    <!-- Header -->
+    <div class="dashboard-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="h2 mb-1"><i class="fas fa-tachometer-alt me-2"></i> HR Dashboard</h1>
+                    <p class="mb-0">Comprehensive overview of your HR system</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="btn-group">
+                        <button class="btn btn-outline-light position-relative me-2">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                        <button class="btn btn-outline-light me-2">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                        <button class="btn btn-outline-light">
+                            <i class="fas fa-user me-1"></i> Admin
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Stats Cards -->
+        <div class="row mb-4">
+            <div class="col-xl-3 col-md-6 mb-3">
+                <div class="stats-card card-1 fade-in">
+                    <i class="fas fa-users"></i>
+                    <div class="count">{{ employees_count }}</div>
+                    <div class="label">TOTAL EMPLOYEES</div>
+                    <button class="btn btn-sm view-employees-btn">
+                        <i class="fas fa-eye me-1"></i> View All
+                    </button>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-3">
+                <div class="stats-card card-2 fade-in">
+                    <i class="fas fa-calendar-check"></i>
+                    <div class="count">{{ attendance_count }}</div>
+                    <div class="label">ATTENDANCE RECORDS</div>
+                    <button class="btn btn-sm view-attendance-btn">
+                        <i class="fas fa-list me-1"></i> View Records
+                    </button>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-3">
+                <div class="stats-card card-3 fade-in">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <div class="count">{{ salary_count }}</div>
+                    <div class="label">SALARY RECORDS</div>
+                    <button class="btn btn-sm view-salary-btn">
+                        <i class="fas fa-file-invoice-dollar me-1"></i> Manage
+                    </button>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-3">
+                <div class="stats-card card-4 fade-in">
+                    <i class="fas fa-clipboard-list"></i>
+                    <div class="count">{{ pending_requests }}</div>
+                    <div class="label">PENDING REQUESTS</div>
+                    <button class="btn btn-sm view-requests-btn">
+                        <i class="fas fa-inbox me-1"></i> Check
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-lg-8">
+                <!-- Charts Row -->
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="m-0 font-weight-bold"><i class="fas fa-chart-pie me-1"></i> Department Distribution</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="departmentChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="m-0 font-weight-bold"><i class="fas fa-chart-line me-1"></i> Attendance Trend</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="attendanceChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card mb-4 fade-in">
+                    <div class="card-header">
+                        <h6 class="m-0 font-weight-bold"><i class="fas fa-bolt me-1"></i> Quick Actions</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-3 col-6 mb-3">
+                                <a href="#" class="quick-action-btn add-employee-btn">
+                                    <i class="fas fa-user-plus"></i>
+                                    <span>Add Employee</span>
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-6 mb-3">
+                                <a href="#" class="quick-action-btn mark-attendance-btn">
+                                    <i class="fas fa-calendar-plus"></i>
+                                    <span>Mark Attendance</span>
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-6 mb-3">
+                                <a href="#" class="quick-action-btn process-salary-btn">
+                                    <i class="fas fa-money-check"></i>
+                                    <span>Process Salary</span>
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-6 mb-3">
+                                <a href="#" class="quick-action-btn generate-letter-btn">
+                                    <i class="fas fa-envelope"></i>
+                                    <span>Generate Letter</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-lg-4">
+                <!-- Recent Activity -->
+                <div class="card mb-4 fade-in">
+                    <div class="card-header">
+                        <h6 class="m-0 font-weight-bold"><i class="fas fa-history me-1"></i> Recent Activity</h6>
+                    </div>
+                    <div class="card-body">
+                        <ul class="recent-activity">
+                            <li>
+                                <span class="badge bg-success">New</span>
+                                hasan added to employees
+                            </li>
+                            <li>
+                                <span class="badge bg-info">Attendance</span>
+                                June attendance marked for 15 employees
+                            </li>
+                            <li>
+                                <span class="badge bg-primary">Salary</span>
+                                May salaries processed
+                            </li>
+                            <li>
+                                <span class="badge bg-warning">Request</span>
+                                3 new leave requests pending
+                            </li>
+                            <li>
+                                <span class="badge bg-secondary">System</span>
+                                System backup completed
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div class="card fade-in">
+                    <div class="card-header">
+                        <h6 class="m-0 font-weight-bold"><i class="fas fa-calendar-day me-1"></i> Upcoming Events</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3 d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">Payday</h6>
+                                <small class="text-muted">5 days left</small>
+                            </div>
+                            <span class="badge bg-success">Salary</span>
+                        </div>
+                        <div class="mb-3 d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">Team Meeting</h6>
+                                <small class="text-muted">Tomorrow, 10:00 AM</small>
+                            </div>
+                            <span class="badge bg-info">Meeting</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">Performance Reviews</h6>
+                                <small class="text-muted">Starting next week</small>
+                            </div>
+                            <span class="badge bg-warning">HR</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Initialize particles.js
+    document.addEventListener('DOMContentLoaded', function() {
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: "#ffffff"
+                },
+                shape: {
+                    type: "circle",
+                    stroke: {
+                        width: 0,
+                        color: "#000000"
+                    }
+                },
+                opacity: {
+                    value: 0.5,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 2,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#ffffff",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "grab"
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: "push"
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+
+        // Initialize charts
+        const departmentCtx = document.getElementById('departmentChart').getContext('2d');
+        const departmentChart = new Chart(departmentCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Sales', 'IT', 'HR', 'Operations', 'Marketing'],
+                datasets: [{
+                    data: [30, 25, 15, 20, 10],
+                    backgroundColor: [
+                        '#1565C0',
+                        '#28A745',
+                        '#17A2B8',
+                        '#FFC107',
+                        '#DC3545'
+                    ],
+                    hoverOffset: 4,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                },
+                cutout: '60%'
+            }
+        });
+
+        const attendanceCtx = document.getElementById('attendanceChart').getContext('2d');
+        const attendanceChart = new Chart(attendanceCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Attendance Rate (%)',
+                    data: [92, 88, 95, 90, 93, 96],
+                    fill: true,
+                    backgroundColor: 'rgba(21, 101, 192, 0.2)',
+                    borderColor: '#1565C0',
+                    tension: 0.3,
+                    pointBackgroundColor: '#1565C0',
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 80,
+                        max: 100,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Button functionality
+        const viewButtons = document.querySelectorAll('.view-employees-btn, .view-attendance-btn, .view-salary-btn, .view-requests-btn');
+        
+        viewButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const action = this.classList[2].split('-')[0];
+                alert(`Viewing ${action} details...`);
+            });
+        });
+
+        // Quick action buttons functionality
+        const quickActionButtons = document.querySelectorAll('.add-employee-btn, .mark-attendance-btn, .process-salary-btn, .generate-letter-btn');
+        
+        quickActionButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const action = this.classList[2].split('-')[0];
+                alert(`${action.charAt(0).toUpperCase() + action.slice(1)} functionality would open here.`);
+            });
+        });
+    });
+</script>
+{% endblock %}

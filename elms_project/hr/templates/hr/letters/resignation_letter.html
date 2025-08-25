@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARS BPO - Resignation Letter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --mars-primary: #ff3e00;
+            --mars-secondary: #ff7f50;
+            --mars-dark: #1a1a2e;
+            --mars-light: #f8f9fa;
+            --mars-accent: #00a8cc;
+            --mars-info: #3498db;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .letter-header {
+            background: linear-gradient(135deg, var(--mars-info), #2980b9);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .header-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .mars-stripes {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--mars-info),
+                var(--mars-info) 10px,
+                #2980b9 10px,
+                #2980b9 20px
+            );
+        }
+        
+        .letter-body {
+            padding: 40px;
+        }
+        
+        .letter-content {
+            background: var(--mars-light);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .letter-content:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--mars-info), #2980b9);
+        }
+        
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .resignation-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .detail-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--mars-info);
+        }
+        
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--mars-dark);
+        }
+        
+        .detail-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--mars-info);
+            font-size: 1.2rem;
+        }
+        
+        .detail-content {
+            color: #555;
+        }
+        
+        .detail-value {
+            font-weight: 700;
+            color: var(--mars-dark);
+            margin-top: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .signature-area {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .signature-box {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .signature-line {
+            height: 1px;
+            background: #ccc;
+            margin: 40px 0 10px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--mars-info), #2980b9);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--mars-info);
+            color: var(--mars-info);
+        }
+        
+        .btn-outline:hover {
+            background: var(--mars-info);
+            color: white;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .content-header {
+                flex-direction: column;
+            }
+            
+            .signature-area {
+                flex-direction: column;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="letter-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-planet-ringed"></i>
+                </div>
+                <div>
+                    <h1>MARS BPO</h1>
+                    <p class="header-subtitle">Resignation Letter</p>
+                </div>
+            </div>
+            <div class="mars-stripes"></div>
+        </div>
+        
+        <div class="letter-body">
+            <div class="letter-content">
+                <div class="content-header">
+                    <div>
+                        <p><strong>Date:</strong> August 23, 2025</p>
+                        <p><strong>Letter ID:</strong> MBPO-RES-2025-089</p>
+                    </div>
+                    <div>
+                        <p><strong>To:</strong> Umair kayani</p>
+                        <p><strong>Position:</strong> HR Director, MARS BPO</p>
+                    </div>
+                </div>
+                
+                <p>Dear Mr. Umair kayani,</p>
+                
+                <p>Please accept this letter as formal notification that I am resigning from my position as Customer Support Specialist at MARS BPO. My last day of employment will be <strong>September 15, 2025</strong>.</p>
+                
+                <div class="resignation-details">
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <div class="detail-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <h3>Resignation Details</h3>
+                        </div>
+                        <div class="detail-content">
+                            <p>Notice Period: <span class="detail-value">3 Weeks</span></p>
+                            <p>Last Working Day: <span class="detail-value">September 15, 2025</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <div class="detail-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <h3>Transition Plan</h3>
+                        </div>
+                        <div class="detail-content">
+                            <p>Knowledge Transfer: <span class="detail-value">September 1-12, 2025</span></p>
+                            <p>Status: <span class="detail-value">Willing to assist</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <div class="detail-icon">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                            <h3>Pending Work</h3>
+                        </div>
+                        <div class="detail-content">
+                            <p>Current Projects: <span class="detail-value">2 projects</span></p>
+                            <p>Documentation: <span class="detail-value">Will complete</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <div class="detail-icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <h3>Exit Process</h3>
+                        </div>
+                        <div class="detail-content">
+                            <p>Exit Interview: <span class="detail-value">Available</span></p>
+                            <p>HR Contact: <span class="detail-value">hr@marsbpo.com</span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>I would like to express my gratitude for the opportunities I have had during my time at MARS BPO. I have greatly valued my experience here and appreciate the support provided by the management team and my colleagues.</p>
+                
+                <p>I am willing to assist in the transition process to ensure a smooth handover of my responsibilities. Please let me know how I can help during this period.</p>
+                
+                <p>Thank you for the opportunity to work at MARS BPO. I wish the company continued success in the future.</p>
+                
+                <p>Sincerely,</p>
+                
+                <div class="signature-area">
+                    <div class="signature-box">
+                        <p><strong>Husain</strong></p>
+                        <p>Customer Support Specialist</p>
+                        <div class="signature-line"></div>
+                        <p>Signature: _________________________</p>
+                        <p>Date: _________________________</p>
+                    </div>
+                    
+                    <div class="signature-box">
+                        <p><strong>For MARS BPO</strong></p>
+                        <div class="signature-line"></div>
+                        <p>Signature: _________________________</p>
+                        <p>Name: _________________________</p>
+                        <p>Position: _________________________</p>
+                        <p>Date: _________________________</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary">
+                    <i class="fas fa-download"></i> Download Resignation Letter
+                </button>
+                <button class="btn btn-outline">
+                    <i class="fas fa-print"></i> Print Resignation Letter
+                </button>
+                <button class="btn btn-outline">
+                    <i class="fas fa-envelope"></i> Email Resignation Letter
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add button functionality
+            document.querySelectorAll('.btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.textContent.includes('Download')) {
+                        alert('Resignation letter download started!');
+                    } else if (this.textContent.includes('Print')) {
+                        window.print();
+                    } else if (this.textContent.includes('Email')) {
+                        alert('Resignation letter sent to your email!');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

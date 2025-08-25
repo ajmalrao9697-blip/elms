@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Employee Details</h2>
+  <div class="card shadow p-3">
+    <ul class="list-group">
+      <li class="list-group-item"><b>Employee ID:</b> {{ employee.employee_id }}</li>
+      <li class="list-group-item"><b>Name:</b> {{ employee.name }}</li>
+      <li class="list-group-item"><b>Father Name:</b> {{ employee.father_name }}</li>
+      <li class="list-group-item"><b>Mother Name:</b> {{ employee.mother_name }}</li>
+      <li class="list-group-item"><b>CNIC:</b> {{ employee.cnic }}</li>
+      <li class="list-group-item"><b>Designation:</b> {{ employee.designation }}</li>
+      <li class="list-group-item"><b>Contact:</b> {{ employee.contact_number }}</li>
+      <li class="list-group-item"><b>Address:</b> {{ employee.address }}</li>
+    </ul>
+    <div class="mt-3">
+      <a href="{% url 'hr:employee_list' %}" class="btn btn-secondary">Back</a>
+      <a href="{% url 'hr:employee_edit' employee.pk %}" class="btn btn-primary">Edit</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -8,21 +8,21 @@
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <style>
     :root { 
-        --primary: #1565C0; 
-        --primary-light: #1976D2; 
-        --secondary: #1E88E5;
-        --success: #28A745; 
+        --primary: #8D6E63; 
+        --primary-light: #A1887F; 
+        --secondary: #C2B280;
+        --success: #689F38; 
         --info: #17A2B8; 
-        --warning: #FFC107; 
-        --danger: #DC3545;
-        --light: #F8F9FA; 
-        --dark: #343A40; 
+        --warning: #FFA000; 
+        --danger: #D32F2F;
+        --light: #FFF8E1; 
+        --dark: #5D4037; 
     }
     
     body { 
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        background: linear-gradient(135deg, #C2B280 0%, #F4EBBE 100%);
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-        color: #343A40;
+        color: #5D4037;
         overflow-x: hidden; 
         min-height: 100vh; 
         position: relative; 
@@ -46,29 +46,31 @@
     }
     
     .dashboard-header {
-        background: rgba(255, 255, 255, 0.15);
-        color: rgb(241, 241, 241);
+        background: rgba(194, 178, 128, 0.3);
+        color: #5D4037;
         padding: 20px 0;
         margin-bottom: 25px;
         border-radius: 0 0 15px 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 15px rgba(93, 64, 55, 0.15);
         backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(194, 178, 128, 0.5);
     }
     
     .card {
         border: none;
         border-radius: 15px;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(93, 64, 55, 0.15);
         margin-bottom: 25px;
         transition: transform 0.3s, box-shadow 0.3s;
-        background: rgba(236, 235, 235, 0.92);
+        background: rgba(255, 248, 225, 0.85);
         backdrop-filter: blur(10px);
         overflow: hidden;
+        border: 1px solid rgba(194, 178, 128, 0.3);
     }
     
     .card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.2);
+        box-shadow: 0 0.5rem 2rem 0 rgba(93, 64, 55, 0.2);
     }
     
     .stats-card {
@@ -77,7 +79,7 @@
         border-radius: 15px;
         color: white;
         margin-bottom: 25px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 15px rgba(93, 64, 55, 0.2);
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
@@ -136,27 +138,28 @@
     }
     
     .card-1 {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        background: linear-gradient(135deg, #8D6E63 0%, #A1887F 100%);
     }
     
     .card-2 {
-        background: linear-gradient(135deg, var(--success) 0%, #34CE87 100%);
+        background: linear-gradient(135deg, #689F38 0%, #8BC34A 100%);
     }
     
     .card-3 {
-        background: linear-gradient(135deg, var(--info) 0%, #39C0D3 100%);
+        background: linear-gradient(135deg, #17A2B8 0%, #39C0D3 100%);
     }
     
     .card-4 {
-        background: linear-gradient(135deg, var(--warning) 0%, #FFD54F 100%);
+        background: linear-gradient(135deg, #FFA000 0%, #FFCA28 100%);
     }
     
     .quick-actions {
-        background-color: rgba(255, 255, 255, 0.92);
+        background-color: rgba(255, 248, 225, 0.85);
         padding: 20px;
         border-radius: 15px;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(93, 64, 55, 0.1);
         backdrop-filter: blur(10px);
+        border: 1px solid rgba(194, 178, 128, 0.3);
     }
     
     .quick-action-btn {
@@ -171,7 +174,8 @@
         transition: all 0.3s;
         height: 100%;
         color: var(--dark);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 5px 15px rgba(93, 64, 55, 0.1);
+        border: 1px solid rgba(194, 178, 128, 0.3);
     }
     
     .quick-action-btn i {
@@ -187,10 +191,10 @@
     }
     
     .quick-action-btn:hover {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        background: linear-gradient(135deg, #8D6E63 0%, #A1887F 100%);
         color: white;
         transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(21, 101, 192, 0.3);
+        box-shadow: 0 10px 25px rgba(141, 110, 99, 0.3);
     }
     
     .quick-action-btn:hover i {
@@ -205,7 +209,7 @@
     
     .recent-activity li {
         padding: 12px 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(93, 64, 55, 0.1);
         display: flex;
         align-items: center;
         transition: background 0.3s;
@@ -213,7 +217,7 @@
     }
     
     .recent-activity li:hover {
-        background-color: rgba(21, 101, 192, 0.05);
+        background-color: rgba(141, 110, 99, 0.05);
         border-radius: 8px;
     }
     
@@ -249,15 +253,24 @@
     }
     
     .btn-outline-light {
-        border-color: rgba(255, 255, 255, 0.5);
-        color: white;
+        border-color: rgba(93, 64, 55, 0.3);
+        color: #5D4037;
         transition: all 0.3s;
+        background-color: rgba(255, 255, 255, 0.5);
     }
     
     .btn-outline-light:hover {
-        background-color: rgba(255, 255, 255, 0.2);
-        border-color: white;
+        background-color: rgba(93, 64, 55, 0.1);
+        border-color: #5D4037;
         transform: translateY(-2px);
+        color: #5D4037;
+    }
+    
+    .card-header {
+        background: rgba(194, 178, 128, 0.2);
+        border-bottom: 1px solid rgba(194, 178, 128, 0.3);
+        color: #5D4037;
+        font-weight: 600;
     }
     
     @keyframes border-animation {
@@ -530,19 +543,20 @@
 
 {% block extra_js %}
 <script>
-    // Initialize particles.js with skin-toned colors
+    // Initialize particles.js with sand colors
     document.addEventListener('DOMContentLoaded', function() {
         particlesJS('particles-js', {
             particles: {
                 number: {
-                    value: 100,
+                    value: 150,
                     density: {
                         enable: true,
                         value_area: 800
                     }
                 },
                 color: {
-                    value: ["#f8d3c5", "#d6b8a2", "#a88a7d", "#e6beae", "#d9a679", "#b07d62", "#8d5524", "#c68642"]
+                    value: ["#C2B280", "#D6C6A5", "#E5D8B4", "#F4EBBE", 
+                            "#D9CC9A", "#B8A87D", "#A89870", "#E2D3A3"]
                 },
                 shape: {
                     type: "circle",
@@ -552,36 +566,36 @@
                     }
                 },
                 opacity: {
-                    value: 0.7,
+                    value: 0.8,
                     random: true,
                     anim: {
                         enable: true,
                         speed: 1,
-                        opacity_min: 0.3,
+                        opacity_min: 0.4,
                         sync: false
                     }
                 },
                 size: {
-                    value: 4,
+                    value: 3,
                     random: true,
                     anim: {
                         enable: true,
-                        speed: 2,
+                        speed: 3,
                         size_min: 1,
                         sync: false
                     }
                 },
                 line_linked: {
                     enable: true,
-                    distance: 120,
-                    color: "#ffffff",
-                    opacity: 0.3,
+                    distance: 100,
+                    color: "#8D6E63",
+                    opacity: 0.2,
                     width: 1
                 },
                 move: {
                     enable: true,
-                    speed: 1.5,
-                    direction: "none",
+                    speed: 2,
+                    direction: "bottom",
                     random: true,
                     straight: false,
                     out_mode: "out",
@@ -598,11 +612,11 @@
                 events: {
                     onhover: {
                         enable: true,
-                        mode: "grab"
+                        mode: "bubble"
                     },
                     onclick: {
                         enable: true,
-                        mode: "push"
+                        mode: "repulse"
                     },
                     resize: true
                 },
@@ -613,8 +627,16 @@
                             opacity: 0.8
                         }
                     },
-                    push: {
-                        particles_nb: 6
+                    bubble: {
+                        distance: 200,
+                        size: 6,
+                        duration: 2,
+                        opacity: 0.8,
+                        speed: 3
+                    },
+                    repulse: {
+                        distance: 100,
+                        duration: 0.4
                     }
                 }
             },
@@ -630,11 +652,11 @@
                 datasets: [{
                     data: [30, 25, 15, 20, 10],
                     backgroundColor: [
-                        '#1565C0',
-                        '#28A745',
+                        '#8D6E63',
+                        '#689F38',
                         '#17A2B8',
-                        '#FFC107',
-                        '#DC3545'
+                        '#FFA000',
+                        '#D32F2F'
                     ],
                     hoverOffset: 4,
                     borderWidth: 0
@@ -665,10 +687,10 @@
                     label: 'Attendance Rate (%)',
                     data: [92, 88, 95, 90, 93, 96],
                     fill: true,
-                    backgroundColor: 'rgba(21, 101, 192, 0.2)',
-                    borderColor: '#1565C0',
+                    backgroundColor: 'rgba(141, 110, 99, 0.2)',
+                    borderColor: '#8D6E63',
                     tension: 0.3,
-                    pointBackgroundColor: '#1565C0',
+                    pointBackgroundColor: '#8D6E63',
                     pointRadius: 4,
                     pointHoverRadius: 6
                 }]
@@ -681,12 +703,12 @@
                         min: 80,
                         max: 100,
                         grid: {
-                            color: 'rgba(0, 0, 0, 0.1)'
+                            color: 'rgba(93, 64, 55, 0.1)'
                         }
                     },
                     x: {
                         grid: {
-                            color: 'rgba(0, 0, 0, 0.1)'
+                            color: 'rgba(93, 64, 55, 0.1)'
                         }
                     }
                 }

@@ -18,7 +18,7 @@
         body {
             display: flex;
             min-height: 100vh;
-            background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%);
+            background: linear-gradient(135deg, #1a2a6c 0%, #2a4b8c 100%);
             overflow: hidden;
             position: relative;
         }
@@ -47,7 +47,7 @@
         .shape {
             position: absolute;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(26, 42, 108, 0.2);
             animation: float 15s infinite ease-in-out;
         }
         
@@ -90,13 +90,13 @@
         }
         
         .company-name {
-            font-size: 4.5rem;
+            font-size: 5.5rem;
             font-weight: 800;
             margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
             animation: slideInLeft 1.5s ease-out;
-            color: #FFF;
-            letter-spacing: 2px;
+            color: white;
+            letter-spacing: 3px;
             position: relative;
             perspective: 1000px;
         }
@@ -105,21 +105,24 @@
             display: inline-block;
             animation: revolve 8s infinite linear;
             transform-style: preserve-3d;
+            color: #ffcc00;
         }
         
         .company-tagline {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 40px;
             opacity: 0.9;
             animation: slideInLeft 1.8s ease-out;
             font-weight: 300;
+            color: rgba(255, 255, 255, 0.9);
         }
         
         .company-info {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             opacity: 0.8;
             animation: slideInLeft 2.1s ease-out;
             line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
         }
         
         /* Right side with login form */
@@ -134,7 +137,7 @@
         .card {
             width: 100%;
             max-width: 450px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.12);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
             border-radius: 20px;
             display: flex;
@@ -143,7 +146,7 @@
             backdrop-filter: blur(12px);
             overflow: hidden;
             transition: 0.5s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             animation: fadeInRight 1.5s ease-out;
         }
         
@@ -160,8 +163,8 @@
         
         .logo-container {
             position: relative;
-            width: 160px;
-            height: 160px;
+            width: 180px;
+            height: 180px;
             margin: 0 auto 25px;
         }
         
@@ -169,15 +172,15 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%);
+            background: linear-gradient(135deg, #1a2a6c 0%, #2a4b8c 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
             animation: pulse 2s infinite;
-            border: 3px solid rgba(255, 255, 255, 0.2);
+            border: 3px solid rgba(255, 204, 0, 0.5);
             position: relative;
             overflow: hidden;
         }
@@ -192,12 +195,13 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            background: linear-gradient(135deg, #1a2a6c 0%, #2a4b8c 100%);
         }
         
         .logo-image .shirt {
             width: 80%;
             height: 50%;
-            background: #1a73e8;
+            background: #ffcc00;
             border-radius: 10px 10px 0 0;
             position: relative;
             display: flex;
@@ -224,9 +228,9 @@
         }
         
         .logo-image .logo-text {
-            color: white;
+            color: #1a2a6c;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 16px;
             letter-spacing: 1px;
             text-align: center;
         }
@@ -256,7 +260,7 @@
             margin-bottom: 30px;
             font-weight: 600;
             letter-spacing: 1px;
-            font-size: 1.8rem;
+            font-size: 2rem;
         }
         
         .input-box {
@@ -270,12 +274,12 @@
             padding: 16px 20px 16px 50px;
             border: none;
             outline: none;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 35px;
             color: white;
             font-size: 1.1rem;
             transition: 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         .input-box input::placeholder {
@@ -283,15 +287,15 @@
         }
         
         .input-box input:focus {
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
         }
         
         .input-box i {
             position: absolute;
             left: 20px;
             top: 16px;
-            color: white;
+            color: #ffcc00;
             font-size: 1.3rem;
         }
         
@@ -300,9 +304,9 @@
             padding: 16px;
             border: none;
             outline: none;
-            background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%);
+            background: linear-gradient(135deg, #ffcc00 0%, #ffdd44 100%);
             border-radius: 35px;
-            color: white;
+            color: #1a2a6c;
             font-size: 1.2rem;
             cursor: pointer;
             transition: 0.3s;
@@ -315,7 +319,7 @@
         .btn:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
-            background: linear-gradient(135deg, #1976D2 0%, #1565C0 100%);
+            background: linear-gradient(135deg, #ffdd44 0%, #ffcc00 100%);
         }
         
         .links {
@@ -325,7 +329,7 @@
         }
         
         .links a {
-            color: rgba(255, 255, 255, 0.85);
+            color: #ffcc00;
             text-decoration: none;
             font-size: 1rem;
             transition: 0.3s;
@@ -337,7 +341,7 @@
         .links a:hover {
             color: white;
             text-decoration: none;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 204, 0, 0.2);
             transform: translateY(-3px);
         }
         
@@ -353,21 +357,23 @@
         
         .error-message {
             color: #ff6b6b;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             padding: 12px;
             border-radius: 10px;
             margin-bottom: 20px;
             font-weight: 500;
             animation: shake 0.5s ease-in-out;
+            border: 1px solid rgba(255, 107, 107, 0.3);
         }
         
         .success-message {
-            color: #4CAF50;
-            background: rgba(255, 255, 255, 0.1);
+            color: #51cf66;
+            background: rgba(255, 255, 255, 0.15);
             padding: 12px;
             border-radius: 10px;
             margin-bottom: 20px;
             font-weight: 500;
+            border: 1px solid rgba(81, 207, 102, 0.3);
         }
         
         /* Modal styles */
@@ -377,7 +383,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(26, 42, 108, 0.8);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -393,7 +399,7 @@
         }
         
         .modal-content {
-            background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%);
+            background: linear-gradient(135deg, #1a2a6c 0%, #2a4b8c 100%);
             width: 90%;
             max-width: 450px;
             border-radius: 20px;
@@ -402,6 +408,7 @@
             transform: translateY(-50px);
             transition: transform 0.5s ease;
             position: relative;
+            border: 1px solid rgba(255, 204, 0, 0.3);
         }
         
         .modal-container.active .modal-content {
@@ -412,7 +419,7 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            color: white;
+            color: #ffcc00;
             font-size: 1.5rem;
             cursor: pointer;
             transition: 0.3s;
@@ -420,6 +427,7 @@
         
         .close-modal:hover {
             transform: rotate(90deg);
+            color: white;
         }
         
         .modal-title {
@@ -476,15 +484,15 @@
         @keyframes pulse {
             0% {
                 transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+                box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.7);
             }
             70% {
                 transform: scale(1);
-                box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+                box-shadow: 0 0 0 20px rgba(255, 204, 0, 0);
             }
             100% {
                 transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+                box-shadow: 0 0 0 0 rgba(255, 204, 0, 0);
             }
         }
         
@@ -507,7 +515,7 @@
             }
             
             .company-name {
-                font-size: 3.5rem;
+                font-size: 4.5rem;
             }
             
             .right-panel {
@@ -517,11 +525,11 @@
         
         @media (max-width: 480px) {
             .company-name {
-                font-size: 2.8rem;
+                font-size: 3.5rem;
             }
             
             .company-tagline {
-                font-size: 1.2rem;
+                font-size: 1.4rem;
             }
             
             .card {
@@ -540,12 +548,12 @@
             }
             
             .logo-container {
-                width: 120px;
-                height: 120px;
+                width: 140px;
+                height: 140px;
             }
             
             .logo-image .logo-text {
-                font-size: 10px;
+                font-size: 12px;
             }
         }
     </style>
@@ -566,7 +574,7 @@
         <p class="company-tagline">Human Resources Management System</p>
         <div class="company-info">
             <p>Chandni Chowk, Rawalpindi</p>
-            <p>© 2023 All Rights Reserved</p>
+            <p>© 2025 All Rights Reserved</p>
         </div>
     </div>
 
@@ -659,20 +667,20 @@
     </div>
 
     <script>
-        // Initialize particles.js with skin-toned colors
+        // Initialize particles.js with blue and gold colors
         document.addEventListener('DOMContentLoaded', function() {
             particlesJS('particles-js', {
                 particles: {
                     number: {
-                        value: 80,
+                        value: 150,
                         density: {
                             enable: true,
                             value_area: 800
                         }
                     },
                     color: {
-                        value: ["#f8d3c5", "#d6b8a2", "#a88a7d", "#e6beae", 
-                                "#d9a679", "#b07d62", "#8d5524", "#c68642"]
+                        value: ["#1a2a6c", "#2a4b8c", "#3a6bcc", "#ffcc00", 
+                                "#ffdd44", "#ffffff", "#aabbff", "#ccddff"]
                     },
                     shape: {
                         type: "circle",
@@ -682,36 +690,36 @@
                         }
                     },
                     opacity: {
-                        value: 0.7,
+                        value: 0.8,
                         random: true,
                         anim: {
                             enable: true,
                             speed: 1,
-                            opacity_min: 0.3,
+                            opacity_min: 0.4,
                             sync: false
                         }
                     },
                     size: {
-                        value: 4,
+                        value: 3,
                         random: true,
                         anim: {
                             enable: true,
-                            speed: 2,
+                            speed: 3,
                             size_min: 1,
                             sync: false
                         }
                     },
                     line_linked: {
                         enable: true,
-                        distance: 120,
-                        color: "#ffffff",
-                        opacity: 0.3,
+                        distance: 100,
+                        color: "#ffcc00",
+                        opacity: 0.2,
                         width: 1
                     },
                     move: {
                         enable: true,
-                        speed: 1.5,
-                        direction: "none",
+                        speed: 2,
+                        direction: "bottom",
                         random: true,
                         straight: false,
                         out_mode: "out",
@@ -728,11 +736,11 @@
                     events: {
                         onhover: {
                             enable: true,
-                            mode: "grab"
+                            mode: "bubble"
                         },
                         onclick: {
                             enable: true,
-                            mode: "push"
+                            mode: "repulse"
                         },
                         resize: true
                     },
@@ -743,8 +751,16 @@
                                 opacity: 0.8
                             }
                         },
-                        push: {
-                            particles_nb: 6
+                        bubble: {
+                            distance: 200,
+                            size: 6,
+                            duration: 2,
+                            opacity: 0.8,
+                            speed: 3
+                        },
+                        repulse: {
+                            distance: 100,
+                            duration: 0.4
                         }
                     }
                 },
@@ -864,11 +880,11 @@
         loginForm.addEventListener('submit', (e) => {
             const btn = loginForm.querySelector('.btn');
             btn.textContent = 'Logging in...';
-            btn.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+            btn.style.background = 'linear-gradient(135deg, #51cf66 0%, #94d82d 100%)';
             
             setTimeout(() => {
                 btn.textContent = 'Login';
-                btn.style.background = 'linear-gradient(135deg, #1565C0 0%, #1976D2 100%)';
+                btn.style.background = 'linear-gradient(135deg, #ffcc00 0%, #ffdd44 100%)';
             }, 2000);
         });
     </script>
